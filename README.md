@@ -24,7 +24,7 @@ Guided compliance self-assessment tool for federal contractors and GovCon vendor
 
 ## Live Demo
 
-Deployed at: `https://YOUR_USERNAME.github.io/centri`
+Deployed at: 'https://rasans-sudo.github.io/Centri/'
 
 ## Built by
 
