@@ -26,13 +26,6 @@ Guided compliance self-assessment tool for federal contractors and GovCon vendor
 
 Deployed at: `https://YOUR_USERNAME.github.io/centri`
 
-## Deploy to GitHub Pages
-
-1. Create a new public repo named `centri`
-2. Upload all files: `index.html`, `manifest.json`, `sw.js`
-3. Go to Settings → Pages → Deploy from branch → main → / (root)
-4. Site goes live at `https://YOUR_USERNAME.github.io/centri`
-
 ## Built by
 
 Rasan — cybersecurity portfolio project demonstrating GRC domain knowledge across CMMC, NIST CSF 2.0, NIST 800-53 Rev 5, and FedRAMP Tailored. Control mapping, question logic, risk weighting, and remediation guidance written from real federal compliance experience.
