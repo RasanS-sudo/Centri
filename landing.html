@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Centri — Guided compliance assessments for CMMC, NIST, and FedRAMP. Know where you stand. Fix what's broken.">
+<meta name="theme-color" content="#0a0f1e">
+<title>Centri — Know where you stand.</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0f1e;
+  --bg2:#0f1629;
+  --bg3:#151d35;
+  --accent:#4f8ef7;
+  --accent2:#7eb3ff;
+  --text:#f0f4ff;
+  --text-muted:#8b9cc8;
+  --text-hint:#4a5578;
+  --border:#1e2a4a;
+  --border2:#263154;
+  --white:#ffffff;
+  --green:#22c55e;
+  --red:#ef4444;
+  --amber:#f59e0b;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Geist',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* GRID TEXTURE */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.3;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border);background:rgba(10,15,30,0.92);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Instrument Serif',serif;font-size:22px;color:var(--text);letter-spacing:-0.3px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-link{font-size:13px;color:var(--text-muted);text-decoration:none;padding:6px 12px;border-radius:6px;transition:color 0.15s}
+.nav-link:hover{color:var(--text)}
+.nav-cta{font-size:13px;color:var(--bg);background:var(--text);border:none;border-radius:6px;padding:7px 16px;font-family:'Geist',sans-serif;font-weight:500;cursor:pointer;text-decoration:none;transition:opacity 0.15s}
+.nav-cta:hover{opacity:0.88}
+
+/* HERO */
+.hero{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:100px 32px 80px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent2);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);padding:4px 12px;border-radius:99px;margin-bottom:28px;font-weight:400}
+.hero-badge-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+h1{font-family:'Instrument Serif',serif;font-size:clamp(42px,7vw,80px);line-height:1.08;color:var(--text);margin-bottom:24px;letter-spacing:-1px}
+h1 em{font-style:italic;color:var(--accent2)}
+.hero-sub{font-size:18px;color:var(--text-muted);max-width:520px;margin:0 auto 40px;line-height:1.7;font-weight:300}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn-hero{font-size:15px;font-weight:500;padding:13px 28px;border-radius:8px;cursor:pointer;font-family:'Geist',sans-serif;text-decoration:none;transition:all 0.15s;display:inline-block}
+.btn-hero-primary{background:var(--accent);color:var(--white);border:none}
+.btn-hero-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-hero-ghost{background:transparent;color:var(--text-muted);border:1px solid var(--border2)}
+.btn-hero-ghost:hover{color:var(--text);border-color:var(--text-hint)}
+.hero-note{font-size:12px;color:var(--text-hint);margin-top:16px}
+
+/* STATS STRIP */
+.stats-strip{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);padding:24px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat-item{text-align:center;padding:8px 16px;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Instrument Serif',serif;font-size:32px;color:var(--text);line-height:1}
+.stat-lbl{font-size:12px;color:var(--text-hint);margin-top:4px}
+
+/* PROBLEM SECTION */
+.section{position:relative;z-index:1;padding:80px 32px}
+.section-inner{max-width:900px;margin:0 auto}
+.section-label{font-size:11px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px}
+.section-title{font-family:'Instrument Serif',serif;font-size:clamp(28px,4vw,44px);color:var(--text);margin-bottom:20px;line-height:1.2;letter-spacing:-0.5px}
+.section-body{font-size:16px;color:var(--text-muted);max-width:560px;line-height:1.8;font-weight:300}
+
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.problem-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px}
+.problem-icon{font-size:13px;font-weight:500;color:var(--red);background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:14px}
+.problem-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px}
+.problem-desc{font-size:13px;color:var(--text-muted);line-height:1.65}
+.problem-price{font-size:12px;color:var(--red);margin-top:10px;font-weight:500}
+
+/* FRAMEWORKS */
+.fw-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.fw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-top:40px;border-radius:12px;overflow:hidden}
+.fw-item{background:var(--bg2);padding:28px 32px}
+.fw-item:hover{background:var(--bg3)}
+.fw-tag{font-size:11px;font-weight:500;color:var(--accent2);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.15);padding:2px 9px;border-radius:99px;display:inline-block;margin-bottom:12px}
+.fw-name{font-size:17px;font-weight:500;color:var(--text);margin-bottom:6px}
+.fw-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px}
+.fw-meta{font-size:12px;color:var(--text-hint)}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.step{position:relative;padding-left:48px}
+.step-num{position:absolute;left:0;top:0;width:32px;height:32px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--accent2)}
+.step-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px}
+.step-desc{font-size:13px;color:var(--text-muted);line-height:1.65}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+.pricing-card.featured{border-color:var(--accent);background:var(--bg3)}
+.pricing-badge{font-size:11px;font-weight:500;color:var(--accent2);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.15);padding:2px 9px;border-radius:99px;display:inline-block;margin-bottom:16px}
+.pricing-name{font-size:14px;font-weight:500;color:var(--text-muted);margin-bottom:8px}
+.pricing-price{font-family:'Instrument Serif',serif;font-size:40px;color:var(--text);line-height:1;margin-bottom:4px}
+.pricing-period{font-size:13px;color:var(--text-hint)}
+.pricing-divider{height:1px;background:var(--border);margin:20px 0}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pricing-features li{font-size:13px;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pricing-features li::before{content:'';width:5px;height:5px;background:var(--accent);border-radius:50%;margin-top:7px;flex-shrink:0}
+.pricing-cta{display:block;text-align:center;margin-top:24px;padding:10px;border-radius:7px;font-size:13px;font-weight:500;font-family:'Geist',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.15s;border:1px solid var(--border2);color:var(--text-muted)}
+.pricing-cta:hover{border-color:var(--accent);color:var(--accent)}
+.pricing-card.featured .pricing-cta{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.pricing-card.featured .pricing-cta:hover{background:var(--accent2)}
+
+/* EMAIL CAPTURE */
+.capture-section{position:relative;z-index:1;padding:80px 32px}
+.capture-inner{max-width:560px;margin:0 auto;text-align:center}
+.capture-title{font-family:'Instrument Serif',serif;font-size:clamp(28px,4vw,40px);color:var(--text);margin-bottom:12px;letter-spacing:-0.5px}
+.capture-sub{font-size:15px;color:var(--text-muted);margin-bottom:32px;font-weight:300}
+.capture-form{display:flex;gap:8px;max-width:440px;margin:0 auto}
+.capture-input{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:12px 16px;font-size:14px;color:var(--text);font-family:'Geist',sans-serif;outline:none;transition:border-color 0.15s}
+.capture-input::placeholder{color:var(--text-hint)}
+.capture-input:focus{border-color:var(--accent)}
+.capture-btn{background:var(--accent);color:var(--white);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;font-family:'Geist',sans-serif;cursor:pointer;white-space:nowrap;transition:background 0.15s}
+.capture-btn:hover{background:var(--accent2)}
+.capture-note{font-size:12px;color:var(--text-hint);margin-top:12px}
+.capture-success{display:none;font-size:14px;color:var(--green);margin-top:16px}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-logo{font-family:'Instrument Serif',serif;font-size:16px;color:var(--text-muted)}
+.footer-logo span{color:var(--accent)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:var(--text-hint);text-decoration:none}
+.footer-links a:hover{color:var(--text-muted)}
+.footer-copy{font-size:12px;color:var(--text-hint)}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:14px 20px}
+  .hero{padding:72px 20px 56px}
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .section{padding:56px 20px}
+  .problem-grid,.steps,.pricing-grid{grid-template-columns:1fr}
+  .fw-grid{grid-template-columns:1fr}
+  .capture-form{flex-direction:column}
+  footer{flex-direction:column;text-align:center;padding:20px}
+  .nav-links .nav-link{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Centri<span>.</span></div>
+  <div class="nav-links">
+    <a href="#frameworks" class="nav-link">Frameworks</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="terms.html" class="nav-link">Terms</a>
+    <a href="app.html" class="nav-cta">Start free assessment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Free self-assessment — no account required
+  </div>
+  <h1>Know where you stand.<br><em>Fix what's broken.</em></h1>
+  <p class="hero-sub">Guided compliance assessments for defense contractors and federal vendors. Get a prioritized gap report in under 20 minutes — no consultant required.</p>
+  <div class="hero-actions">
+    <a href="app.html" class="btn-hero btn-hero-primary">Start free assessment</a>
+    <a href="#how-it-works" class="btn-hero btn-hero-ghost">See how it works</a>
+  </div>
+  <p class="hero-note">CMMC Level 1 · NIST CSF 2.0 · NIST 800-53 Rev 5 · FedRAMP Tailored</p>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-num">4</div><div class="stat-lbl">Frameworks covered</div></div>
+  <div class="stat-item"><div class="stat-num">89</div><div class="stat-lbl">Controls mapped</div></div>
+  <div class="stat-item"><div class="stat-num">267</div><div class="stat-lbl">Plain-English questions</div></div>
+  <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Data collected</div></div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section fade-up">
+  <div class="section-inner">
+    <div class="section-label">The problem</div>
+    <h2 class="section-title">Small contractors have three bad options</h2>
+    <p class="section-body">If you're a 20-person defense contractor in Northern Virginia trying to get CMMC-compliant, your current options all have serious problems.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">Option 1</div>
+        <div class="problem-title">Hire a full-time GRC analyst</div>
+        <div class="problem-desc">Deep expertise, but most small contractors can't justify a dedicated security hire before they've won the contracts that require it.</div>
+        <div class="problem-price">$80–100k/year</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">Option 2</div>
+        <div class="problem-title">Pay a consulting firm</div>
+        <div class="problem-desc">Point-in-time assessment that goes stale in 6 months. You get a report, not a program. And you're back to square one next year.</div>
+        <div class="problem-price">$15–50k per engagement</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">Option 3</div>
+        <div class="problem-title">Wing it with a spreadsheet</div>
+        <div class="problem-desc">Most common option. No prioritization, no guidance, no evidence structure. Hope you pass the audit — and hope the auditor doesn't ask hard questions.</div>
+        <div class="problem-price">$0 now, unknown later</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORKS -->
+<section class="section fw-section fade-up" id="frameworks">
+  <div class="section-inner">
+    <div class="section-label">Coverage</div>
+    <h2 class="section-title">Every framework that matters for federal work</h2>
+    <p class="section-body">Built from real control validation experience — not a framework PDF. Each assessment maps plain-English questions to actual controls, with remediation guidance written for your environment.</p>
+    <div class="fw-grid">
+      <div class="fw-item">
+        <div class="fw-tag">DoD / Defense</div>
+        <div class="fw-name">CMMC Level 1</div>
+        <div class="fw-desc">Required for all DoD contractors handling Federal Contract Information. 17 practices across 6 domains. The entry point for any defense contractor.</div>
+        <div class="fw-meta">17 practices · 51 questions · 6 domains</div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-tag">General</div>
+        <div class="fw-name">NIST CSF 2.0</div>
+        <div class="fw-desc">The updated cybersecurity framework with the new Govern function. Applicable to any organization. Good starting point if you're not sure where to begin.</div>
+        <div class="fw-meta">18 categories · 54 questions · 6 functions</div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-tag">Federal</div>
+        <div class="fw-name">NIST 800-53 Rev 5</div>
+        <div class="fw-desc">The federal security control catalog. Required for FISMA compliance and ATO packages. Scoped to the 10 control families that matter most for your environment.</div>
+        <div class="fw-meta">30 controls · 90 questions · 10 families</div>
+      </div>
+      <div class="fw-item">
+        <div class="fw-tag">FedRAMP</div>
+        <div class="fw-name">FedRAMP Tailored</div>
+        <div class="fw-desc">The lightest FedRAMP baseline for low-impact SaaS vendors selling to federal agencies. The realistic entry point for small software companies pursuing federal customers.</div>
+        <div class="fw-meta">24 controls · 72 questions · 8 families</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section fade-up" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">A guided audit, not a checklist</h2>
+    <p class="section-body">Each section walks you through the controls that matter, in plain English, with context for why they matter and exactly what to do if you're failing.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Pick your framework</div>
+        <div class="step-desc">Choose the standard that applies to your situation. Not sure? Start with CMMC Level 1 if you have DoD contracts, or NIST CSF 2.0 for a broader baseline.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Answer the questions</div>
+        <div class="step-desc">Work through plain-English questions organized by control family. Yes, No, Partial, or N/A. No jargon. No framework citations. Just real questions about your real environment.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Get your gap report</div>
+        <div class="step-desc">See your compliance score, every failing control sorted by risk level, and specific remediation steps for your environment — not generic guidance copy-pasted from a framework document.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section fade-up" id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Start free. Upgrade when you're ready.</h2>
+    <p class="section-body">The assessment is free forever. Pro features are for organizations that need saved results, document generation, and ongoing monitoring.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-period">forever</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>All 4 framework assessments</li>
+          <li>267 plain-English questions</li>
+          <li>Real-time compliance scoring</li>
+          <li>Prioritized gap report</li>
+          <li>Remediation guidance per control</li>
+          <li>No account required</li>
+        </ul>
+        <a href="app.html" class="pricing-cta">Start assessment</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Coming soon</div>
+        <div class="pricing-name">Growth</div>
+        <div class="pricing-price">$299</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Free</li>
+          <li>Saved assessments across sessions</li>
+          <li>PDF gap report export</li>
+          <li>Auto-generated SSP and POA&amp;M</li>
+          <li>Evidence locker per control</li>
+          <li>2 frameworks simultaneously</li>
+          <li>Quarterly reassessment reminders</li>
+        </ul>
+        <a href="#notify" class="pricing-cta">Get notified at launch</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-price">$599</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Growth</li>
+          <li>All frameworks</li>
+          <li>Multi-user access</li>
+          <li>White-glove onboarding call</li>
+          <li>Priority support</li>
+          <li>Expert review add-on ($299 flat)</li>
+        </ul>
+        <a href="#notify" class="pricing-cta">Get notified at launch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="capture-section fade-up" id="notify">
+  <div class="capture-inner">
+    <h2 class="capture-title">Get notified when Pro launches</h2>
+    <p class="capture-sub">Drop your email and we'll let you know when saved assessments, document generation, and the evidence locker go live. No spam.</p>
+    <div class="capture-form">
+      <input type="email" class="capture-input" id="email-input" placeholder="your@company.com">
+      <button class="capture-btn" onclick="submitEmail()">Notify me</button>
+    </div>
+    <p class="capture-note">No spam. Unsubscribe anytime. We don't sell your data.</p>
+    <p class="capture-success" id="capture-success">You're on the list. We'll reach out when Pro launches.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Centri<span>.</span></div>
+  <div class="footer-links">
+    <a href="app.html">Assessment</a>
+    <a href="#frameworks">Frameworks</a>
+    <a href="#pricing">Pricing</a>
+    <a href="terms.html">Terms</a>
+  </div>
+  <div class="footer-copy">&copy; 2025 Centri. All rights reserved.</div>
+</footer>
+
+<script>
+function submitEmail(){
+  const val=document.getElementById('email-input').value.trim();
+  if(!val||!val.includes('@')){document.getElementById('email-input').focus();return;}
+  document.querySelector('.capture-form').style.display='none';
+  document.getElementById('capture-success').style.display='block';
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
